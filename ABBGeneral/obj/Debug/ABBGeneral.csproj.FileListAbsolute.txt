@@ -11,3 +11,9 @@ D:\VC\ABB\ABBGeneral\ABBGeneral\bin\Debug\RobotStudio.Services.RobApi.dll
 D:\VC\ABB\ABBGeneral\ABBGeneral\bin\Debug\RobotStudio.Services.RobApi.Desktop.dll
 D:\VC\ABB\ABBGeneral\ABBGeneral\bin\Debug\ABB.Robotics.Controllers.PC.xml
 D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\ABBGeneral.MainFrm.resources
+D:\VC\ABB\ABBGeneral\ABBGeneral\bin\Debug\en-US\ABBGeneral.resources.dll
+D:\VC\ABB\ABBGeneral\ABBGeneral\bin\Debug\en\ABBGeneral.resources.dll
+D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\ABBGeneral.mainFrm.en-US.resources
+D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\ABBGeneral.mainFrm.en.resources
+D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\en-US\ABBGeneral.resources.dll
+D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\en\ABBGeneral.resources.dll

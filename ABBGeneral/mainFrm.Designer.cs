@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainFrm));
             this.labelEnDebug = new System.Windows.Forms.Label();
             this.listViewController = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -71,12 +72,8 @@
             // 
             // labelEnDebug
             // 
-            this.labelEnDebug.AutoSize = true;
-            this.labelEnDebug.Location = new System.Drawing.Point(934, 476);
+            resources.ApplyResources(this.labelEnDebug, "labelEnDebug");
             this.labelEnDebug.Name = "labelEnDebug";
-            this.labelEnDebug.Size = new System.Drawing.Size(15, 15);
-            this.labelEnDebug.TabIndex = 1;
-            this.labelEnDebug.Text = "o";
             this.labelEnDebug.Click += new System.EventHandler(this.labelEnDebug_Click);
             // 
             // listViewController
@@ -92,41 +89,39 @@
             this.columnHeader7});
             this.listViewController.FullRowSelect = true;
             this.listViewController.GridLines = true;
-            this.listViewController.Location = new System.Drawing.Point(12, 12);
+            resources.ApplyResources(this.listViewController, "listViewController");
             this.listViewController.Name = "listViewController";
-            this.listViewController.Size = new System.Drawing.Size(692, 270);
-            this.listViewController.TabIndex = 2;
             this.listViewController.UseCompatibleStateImageBehavior = false;
             this.listViewController.View = System.Windows.Forms.View.Details;
             this.listViewController.DoubleClick += new System.EventHandler(this.listViewController_DoubleClick);
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "IP Address";
+            resources.ApplyResources(this.columnHeader1, "columnHeader1");
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "ID";
+            resources.ApplyResources(this.columnHeader2, "columnHeader2");
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "Availability";
+            resources.ApplyResources(this.columnHeader3, "columnHeader3");
             // 
             // columnHeader4
             // 
-            this.columnHeader4.Text = "Virtual";
+            resources.ApplyResources(this.columnHeader4, "columnHeader4");
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "System Name";
+            resources.ApplyResources(this.columnHeader5, "columnHeader5");
             // 
             // columnHeader6
             // 
-            this.columnHeader6.Text = "RobotWare Version";
+            resources.ApplyResources(this.columnHeader6, "columnHeader6");
             // 
             // columnHeader7
             // 
-            this.columnHeader7.Text = "Controller Name";
+            resources.ApplyResources(this.columnHeader7, "columnHeader7");
             // 
             // groupBoxStatus
             // 
@@ -136,80 +131,49 @@
             this.groupBoxStatus.Controls.Add(this.pictureBoxExecStatus);
             this.groupBoxStatus.Controls.Add(this.pictureBoxStatus);
             this.groupBoxStatus.Controls.Add(this.pictureBoxMode);
-            this.groupBoxStatus.Location = new System.Drawing.Point(12, 298);
+            resources.ApplyResources(this.groupBoxStatus, "groupBoxStatus");
             this.groupBoxStatus.Name = "groupBoxStatus";
-            this.groupBoxStatus.Size = new System.Drawing.Size(200, 256);
-            this.groupBoxStatus.TabIndex = 3;
             this.groupBoxStatus.TabStop = false;
-            this.groupBoxStatus.Text = "状态指示";
             // 
             // labelExecStatus
             // 
-            this.labelExecStatus.AutoSize = true;
-            this.labelExecStatus.Font = new System.Drawing.Font("宋体", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelExecStatus.Location = new System.Drawing.Point(6, 163);
+            resources.ApplyResources(this.labelExecStatus, "labelExecStatus");
             this.labelExecStatus.Name = "labelExecStatus";
-            this.labelExecStatus.Size = new System.Drawing.Size(68, 17);
-            this.labelExecStatus.TabIndex = 7;
-            this.labelExecStatus.Text = "label4";
             this.labelExecStatus.Click += new System.EventHandler(this.labelExecStatus_Click);
             // 
             // labelStatus
             // 
-            this.labelStatus.AutoSize = true;
-            this.labelStatus.Font = new System.Drawing.Font("宋体", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelStatus.Location = new System.Drawing.Point(6, 77);
+            resources.ApplyResources(this.labelStatus, "labelStatus");
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(68, 17);
-            this.labelStatus.TabIndex = 5;
-            this.labelStatus.Text = "label2";
             // 
             // labelMode
             // 
-            this.labelMode.AutoSize = true;
-            this.labelMode.Font = new System.Drawing.Font("宋体", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelMode.Location = new System.Drawing.Point(6, 36);
+            resources.ApplyResources(this.labelMode, "labelMode");
             this.labelMode.Name = "labelMode";
-            this.labelMode.Size = new System.Drawing.Size(68, 17);
-            this.labelMode.TabIndex = 4;
-            this.labelMode.Text = "label1";
             // 
             // pictureBoxExecStatus
             // 
-            this.pictureBoxExecStatus.Location = new System.Drawing.Point(56, 200);
+            resources.ApplyResources(this.pictureBoxExecStatus, "pictureBoxExecStatus");
             this.pictureBoxExecStatus.Name = "pictureBoxExecStatus";
-            this.pictureBoxExecStatus.Size = new System.Drawing.Size(100, 50);
-            this.pictureBoxExecStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxExecStatus.TabIndex = 3;
             this.pictureBoxExecStatus.TabStop = false;
             // 
             // pictureBoxStatus
             // 
-            this.pictureBoxStatus.Location = new System.Drawing.Point(56, 87);
+            resources.ApplyResources(this.pictureBoxStatus, "pictureBoxStatus");
             this.pictureBoxStatus.Name = "pictureBoxStatus";
-            this.pictureBoxStatus.Size = new System.Drawing.Size(100, 50);
-            this.pictureBoxStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxStatus.TabIndex = 1;
             this.pictureBoxStatus.TabStop = false;
             // 
             // pictureBoxMode
             // 
-            this.pictureBoxMode.Location = new System.Drawing.Point(56, 24);
+            resources.ApplyResources(this.pictureBoxMode, "pictureBoxMode");
             this.pictureBoxMode.Name = "pictureBoxMode";
-            this.pictureBoxMode.Size = new System.Drawing.Size(100, 50);
-            this.pictureBoxMode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxMode.TabIndex = 0;
             this.pictureBoxMode.TabStop = false;
             // 
             // textBoxRapidList
             // 
-            this.textBoxRapidList.Location = new System.Drawing.Point(230, 298);
-            this.textBoxRapidList.Multiline = true;
+            resources.ApplyResources(this.textBoxRapidList, "textBoxRapidList");
             this.textBoxRapidList.Name = "textBoxRapidList";
             this.textBoxRapidList.ReadOnly = true;
-            this.textBoxRapidList.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxRapidList.Size = new System.Drawing.Size(216, 256);
-            this.textBoxRapidList.TabIndex = 8;
             // 
             // listViewInfo
             // 
@@ -219,21 +183,19 @@
             this.columnHeader9});
             this.listViewInfo.FullRowSelect = true;
             this.listViewInfo.GridLines = true;
-            this.listViewInfo.Location = new System.Drawing.Point(615, 298);
+            resources.ApplyResources(this.listViewInfo, "listViewInfo");
             this.listViewInfo.Name = "listViewInfo";
-            this.listViewInfo.Size = new System.Drawing.Size(313, 270);
-            this.listViewInfo.TabIndex = 9;
             this.listViewInfo.UseCompatibleStateImageBehavior = false;
             this.listViewInfo.View = System.Windows.Forms.View.Details;
             this.listViewInfo.DoubleClick += new System.EventHandler(this.listViewInfo_DoubleClick);
             // 
             // columnHeader8
             // 
-            this.columnHeader8.Text = "Name";
+            resources.ApplyResources(this.columnHeader8, "columnHeader8");
             // 
             // columnHeader9
             // 
-            this.columnHeader9.Text = "Type";
+            resources.ApplyResources(this.columnHeader9, "columnHeader9");
             // 
             // listViewMonitor
             // 
@@ -244,61 +206,49 @@
             this.columnHeader13});
             this.listViewMonitor.FullRowSelect = true;
             this.listViewMonitor.GridLines = true;
-            this.listViewMonitor.Location = new System.Drawing.Point(474, 298);
+            resources.ApplyResources(this.listViewMonitor, "listViewMonitor");
             this.listViewMonitor.Name = "listViewMonitor";
-            this.listViewMonitor.Size = new System.Drawing.Size(313, 270);
-            this.listViewMonitor.TabIndex = 10;
             this.listViewMonitor.UseCompatibleStateImageBehavior = false;
             this.listViewMonitor.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader11
             // 
-            this.columnHeader11.Text = "Name";
+            resources.ApplyResources(this.columnHeader11, "columnHeader11");
             // 
             // columnHeader12
             // 
-            this.columnHeader12.Text = "Value";
+            resources.ApplyResources(this.columnHeader12, "columnHeader12");
             // 
             // columnHeader13
             // 
-            this.columnHeader13.Text = "Type";
+            resources.ApplyResources(this.columnHeader13, "columnHeader13");
             // 
             // buttonStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(666, 211);
+            resources.ApplyResources(this.buttonStart, "buttonStart");
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(247, 81);
-            this.buttonStart.TabIndex = 11;
-            this.buttonStart.Text = "双击左边列表添加欲监控的信号以及输入欲监控的变量名录入到变量表中（变量表里Num类型可清零，需要示教器确认），然后点我开始监控";
             this.buttonStart.UseVisualStyleBackColor = true;
             this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(733, 107);
+            resources.ApplyResources(this.textBoxName, "textBoxName");
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(100, 25);
-            this.textBoxName.TabIndex = 12;
             // 
             // comboBoxType
             // 
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Items.AddRange(new object[] {
-            "Num",
-            "Bool"});
-            this.comboBoxType.Location = new System.Drawing.Point(755, 138);
+            resources.GetString("comboBoxType.Items"),
+            resources.GetString("comboBoxType.Items1")});
+            resources.ApplyResources(this.comboBoxType, "comboBoxType");
             this.comboBoxType.Name = "comboBoxType";
-            this.comboBoxType.Size = new System.Drawing.Size(121, 23);
-            this.comboBoxType.TabIndex = 13;
             // 
             // buttonInput
             // 
-            this.buttonInput.Location = new System.Drawing.Point(815, 167);
+            resources.ApplyResources(this.buttonInput, "buttonInput");
             this.buttonInput.Name = "buttonInput";
-            this.buttonInput.Size = new System.Drawing.Size(98, 27);
-            this.buttonInput.TabIndex = 14;
-            this.buttonInput.Text = "录入";
             this.buttonInput.UseVisualStyleBackColor = true;
             this.buttonInput.Click += new System.EventHandler(this.buttonInput_Click);
             // 
@@ -311,33 +261,28 @@
             this.columnHeader15});
             this.listViewData.FullRowSelect = true;
             this.listViewData.GridLines = true;
-            this.listViewData.Location = new System.Drawing.Point(324, 204);
+            resources.ApplyResources(this.listViewData, "listViewData");
             this.listViewData.Name = "listViewData";
-            this.listViewData.Size = new System.Drawing.Size(313, 270);
-            this.listViewData.TabIndex = 15;
             this.listViewData.UseCompatibleStateImageBehavior = false;
             this.listViewData.View = System.Windows.Forms.View.Details;
             this.listViewData.DoubleClick += new System.EventHandler(this.listViewData_DoubleClick);
             // 
             // columnHeader10
             // 
-            this.columnHeader10.Text = "Name";
+            resources.ApplyResources(this.columnHeader10, "columnHeader10");
             // 
             // columnHeader14
             // 
-            this.columnHeader14.Text = "Value";
+            resources.ApplyResources(this.columnHeader14, "columnHeader14");
             // 
             // columnHeader15
             // 
-            this.columnHeader15.Text = "Type";
+            resources.ApplyResources(this.columnHeader15, "columnHeader15");
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(815, 50);
+            resources.ApplyResources(this.buttonClear, "buttonClear");
             this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(75, 23);
-            this.buttonClear.TabIndex = 16;
-            this.buttonClear.Text = "全部清除";
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
@@ -345,27 +290,21 @@
             // 
             this.comboBoxTask.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTask.FormattingEnabled = true;
-            this.comboBoxTask.Location = new System.Drawing.Point(452, 385);
+            resources.ApplyResources(this.comboBoxTask, "comboBoxTask");
             this.comboBoxTask.Name = "comboBoxTask";
-            this.comboBoxTask.Size = new System.Drawing.Size(121, 23);
-            this.comboBoxTask.TabIndex = 17;
             // 
             // comboBoxModule
             // 
             this.comboBoxModule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxModule.FormattingEnabled = true;
-            this.comboBoxModule.Location = new System.Drawing.Point(615, 385);
+            resources.ApplyResources(this.comboBoxModule, "comboBoxModule");
             this.comboBoxModule.Name = "comboBoxModule";
-            this.comboBoxModule.Size = new System.Drawing.Size(121, 23);
-            this.comboBoxModule.TabIndex = 18;
             // 
             // mainFrm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::ABBGeneral.Properties.Resources.background;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(961, 678);
             this.Controls.Add(this.comboBoxModule);
             this.Controls.Add(this.comboBoxTask);
             this.Controls.Add(this.buttonClear);
@@ -384,8 +323,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "mainFrm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ABB General Manager";
             this.Load += new System.EventHandler(this.mainForm_Load);
             this.groupBoxStatus.ResumeLayout(false);
             this.groupBoxStatus.PerformLayout();

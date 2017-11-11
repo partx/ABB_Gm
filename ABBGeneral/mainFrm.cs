@@ -14,6 +14,8 @@ using ABB.Robotics.Controllers;
 using ABB.Robotics.Controllers.Discovery;
 using ABB.Robotics.Controllers.RapidDomain;
 using ABB.Robotics.Controllers.IOSystemDomain;
+using System.Threading;
+using System.Resources;
 
 namespace ABBGeneral
 {
@@ -48,17 +50,19 @@ namespace ABBGeneral
             /////////////////////////////////////////////////////////////
             ///建立一个互斥量防止程序再次运行，同一时间只允许运行一个实例
             //////////////////////////////////////////////////////////////
-            bool createNew;
-            Attribute guid_attr = Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(GuidAttribute));
-            string guid = ((GuidAttribute)guid_attr).Value;
-            debugMess.Add("guid: " +guid);
-            _mutex = new System.Threading.Mutex(true, guid, out createNew);
-            if(false==createNew)
-            {
-                MessageBox.Show("只能运行一个实例");
-                this.Close();
-            }
-            _mutex.ReleaseMutex();
+           
+                bool createNew;
+                Attribute guid_attr = Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(GuidAttribute));
+                string guid = ((GuidAttribute)guid_attr).Value;
+                debugMess.Add("guid: " + guid);
+                _mutex = new System.Threading.Mutex(true, guid, out createNew);
+                if (false == createNew)
+                {
+                    MessageBox.Show("only a instance");
+                    this.Close();
+                }
+                _mutex.ReleaseMutex();
+           
 
             /////////////////////////////////////////////////////////////
             ///开启ABB网络监听并实例化一些部件
@@ -92,13 +96,13 @@ namespace ABBGeneral
 
             listViewController.Top = 12;
             listViewController.Left = listViewController.Top;
-            listViewController.Width = this.ClientRectangle.Width - 2*listViewController.Top;
+            listViewController.Width = this.ClientRectangle.Width - 2*listViewController.Left;
             listViewController.Height = this.ClientRectangle.Height / 3;
             int colWidth=listViewController.Width/7;
             for (int i = 0; i < 7;i++ )
                 listViewController.Columns[i].Width = colWidth;
 
-            groupBoxStatus.Top = listViewController.Bottom + listViewController.Top;
+            groupBoxStatus.Top = listViewController.Bottom + listViewController.Left;
             groupBoxStatus.Left = listViewController.Left;
             groupBoxStatus.Width = listViewController.Width / 5;
             groupBoxStatus.Height = this.ClientRectangle.Bottom - listViewController.Bottom - 2 * listViewController.Top;
@@ -306,13 +310,13 @@ namespace ABBGeneral
                 }
                 else
                 {
-                    MessageBox.Show("未选择有效的控制器");
+                    MessageBox.Show("Unselected controller");
 
                 }
             }
             catch(System.Exception ex)
             {
-                MessageBox.Show("意外发生：" + ex.Message);
+                MessageBox.Show("error：" + ex.Message);
             }
         }
         #endregion
@@ -360,7 +364,7 @@ namespace ABBGeneral
             }
             catch
             {
-                MessageBox.Show("获取Rapid列表失败！");
+                MessageBox.Show("get Rapid list error");
             }
             
         }
@@ -457,7 +461,7 @@ namespace ABBGeneral
             }
             catch
             {
-                MessageBox.Show("获取IO列表失败！");
+                MessageBox.Show("get IO list error");
             }
 
             /////////////////////////////////////////////////////////////
@@ -478,7 +482,7 @@ namespace ABBGeneral
             }
             else
             {
-                MessageBox.Show("请选中有效的任务，模块，及变量名");
+                MessageBox.Show("select task,module,PERS");
             }
             
         }
@@ -535,7 +539,7 @@ namespace ABBGeneral
                 }
                 catch
                 {
-                    MessageBox.Show("取值过程发生错误，请检查任务名，模块名，可变量名！");
+                    MessageBox.Show("error，check task name,module name,PERS name");
                 }
             }
         }
@@ -703,17 +707,17 @@ namespace ABBGeneral
             string temp = "0";
             if(listViewData.SelectedItems[0].SubItems[2].Text=="Num")
             {
-                MessageBox.Show("你真的决定要对此变量清零？如果是的话，点确定后，请去示教器上确认访问权限！");
+                MessageBox.Show("Zero clearing?    accept in the flexpandent after click OK");
                 rdt = this.ctl.Rapid.GetTask(taskName).GetModule(moduleName).GetRapidData(listViewData.SelectedItems[0].Text.ToString());
                 Mastership mas = Mastership.Request(this.ctl.Rapid);
                 //Change: controller is repaced by aController
                 rdt.Value = ABB.Robotics.Controllers.RapidDomain.Num.Parse(temp);
                 mas.Dispose();
-                MessageBox.Show("数据已经清零");
+                MessageBox.Show("zero clearing");
             }
             else
             {
-                MessageBox.Show("对象不是Num类型");
+                MessageBox.Show("Type isn't Num");
             }
 
             //Release mastership as soon as possible
@@ -747,7 +751,7 @@ namespace ABBGeneral
                 }
                 else
                 {
-                    MessageBox.Show("需要自动模式，以及打开马达");
+                    MessageBox.Show("Please turn to Auto mode and motor on");
                 }
             }
             catch (System.InvalidOperationException ex)
@@ -760,5 +764,8 @@ namespace ABBGeneral
             }
         }
 
+     
+
+       
     }
 }
