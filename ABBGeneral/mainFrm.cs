@@ -135,14 +135,50 @@ namespace ABBGeneral
             labelExecStatus.Left = groupBoxStatus.Left / 2;
             labelExecStatus.Text = "N/A";
 
-            textBoxRapidList.Top = groupBoxStatus.Top;
-            textBoxRapidList.Left = groupBoxStatus.Right + groupBoxStatus.Left;
-            textBoxRapidList.Width = (this.ClientRectangle.Width-(5*groupBoxStatus.Left+groupBoxStatus.Width))/3;
-            textBoxRapidList.Height = 4*groupBoxStatus.Height/5;
+            groupBoxRapidList.Top = groupBoxStatus.Top;
+            groupBoxRapidList.Left = groupBoxStatus.Right + groupBoxStatus.Left;
+            groupBoxRapidList.Width = (this.ClientRectangle.Width - (5 * groupBoxStatus.Left + groupBoxStatus.Width)) / 3;
+            groupBoxRapidList.Height = 4 * groupBoxStatus.Height / 5;
+            groupBoxRapidList.Enabled = false;
 
-            comboBoxTask.Top = textBoxRapidList.Bottom + groupBoxStatus.Left;
-            comboBoxTask.Left = textBoxRapidList.Left;
-            comboBoxTask.Width = textBoxRapidList.Width / 2 - groupBoxStatus.Left / 2;
+            textBoxRapidList.Enabled = false;
+
+            groupBoxInfo.Top = groupBoxStatus.Top;
+            groupBoxInfo.Left = groupBoxRapidList.Right + groupBoxStatus.Left;
+            groupBoxInfo.Width = groupBoxRapidList.Width;
+            groupBoxInfo.Height = 4 * groupBoxStatus.Height / 5;
+            for (int i = 0; i < 2; i++)
+                listViewInfo.Columns[i].Width = listViewInfo.Width / 2 - 5;
+            listViewInfo.Enabled = false;
+            groupBoxInfo.Enabled = false;
+
+            groupBoxMonitor.Top = groupBoxStatus.Top;
+            groupBoxMonitor.Left = groupBoxInfo.Right + groupBoxStatus.Left;
+            groupBoxMonitor.Width = groupBoxInfo.Width;
+            groupBoxMonitor.Height = 2 * groupBoxStatus.Height / 5;
+            for (int i = 0; i < 3; i++)
+                listViewMonitor.Columns[i].Width = listViewMonitor.Width / 3 - 2;
+            listViewMonitor.Enabled = false;
+            groupBoxMonitor.Enabled = false;
+
+            groupBoxData.Top = groupBoxMonitor.Bottom + groupBoxStatus.Left;
+            groupBoxData.Left = groupBoxMonitor.Left;
+            groupBoxData.Width = groupBoxInfo.Width;
+            groupBoxData.Height = 2 * groupBoxStatus.Height / 5;
+            for (int i = 0; i < 3; i++)
+                listViewData.Columns[i].Width = listViewMonitor.Width / 3 - 2;
+            listViewData.Enabled = false;
+            groupBoxData.Enabled = false;
+
+            groupBoxPERS.Top = groupBoxRapidList.Bottom + groupBoxStatus.Left;
+            groupBoxPERS.Left = groupBoxRapidList.Left;
+            groupBoxPERS.Width = groupBoxInfo.Right - groupBoxPERS.Left;
+            groupBoxPERS.Height = groupBoxStatus.Bottom - groupBoxPERS.Top;
+            groupBoxPERS.Enabled = false;
+
+            comboBoxTask.Top = groupBoxStatus.Left;
+            comboBoxTask.Left = groupBoxStatus.Left;
+            comboBoxTask.Width = groupBoxRapidList.Width / 2 - 2*groupBoxStatus.Left / 2;
             comboBoxTask.Enabled = false;
 
             comboBoxModule.Top = comboBoxTask.Top;
@@ -150,53 +186,29 @@ namespace ABBGeneral
             comboBoxModule.Width = comboBoxTask.Width;
             comboBoxModule.Enabled = false;
 
-            listViewInfo.Top = groupBoxStatus.Top;
-            listViewInfo.Left = textBoxRapidList.Right + groupBoxStatus.Left;
-            listViewInfo.Width = textBoxRapidList.Width;
-            listViewInfo.Height = 4*groupBoxStatus.Height/5;
-            for (int i = 0; i < 2;i++ )
-                listViewInfo.Columns[i].Width = listViewInfo.Width / 2-2;
-            listViewInfo.Enabled = false;
-
-            textBoxName.Top = listViewInfo.Bottom + groupBoxStatus.Left;
-            textBoxName.Left = listViewInfo.Left;
-            textBoxName.Width = listViewInfo.Width / 2;
+            textBoxName.Top = comboBoxTask.Top;
+            textBoxName.Left = comboBoxModule.Right+groupBoxStatus.Left;
+            textBoxName.Width = comboBoxTask.Width;
             textBoxName.Enabled = false;
 
             comboBoxType.Top = textBoxName.Top;
             comboBoxType.Left = textBoxName.Right + groupBoxStatus.Left;
-            comboBoxType.Width = textBoxName.Width - groupBoxStatus.Left;
+            comboBoxType.Width = textBoxName.Width;
             comboBoxType.SelectedIndex = 0;
             comboBoxType.Enabled = false;
 
-            buttonInput.Top = textBoxName.Bottom + groupBoxStatus.Left;
-            buttonInput.Left = textBoxName.Left + listViewInfo.Width / 3 - buttonInput.Width / 2;
+            buttonInput.Top = textBoxName.Bottom + groupBoxStatus.Left/3;
+            buttonInput.Left = textBoxName.Left;
             buttonInput.Enabled = false;
 
             buttonClear.Size = buttonInput.Size;
             buttonClear.Top = buttonInput.Top;
-            buttonClear.Left = textBoxName.Left + 2*listViewInfo.Width / 3 - buttonInput.Width / 2;
+            buttonClear.Left = comboBoxType.Left;
             buttonClear.Enabled = false;
 
-            listViewMonitor.Top = groupBoxStatus.Top;
-            listViewMonitor.Left = listViewInfo.Right + groupBoxStatus.Left;
-            listViewMonitor.Width = listViewInfo.Width;
-            listViewMonitor.Height = 2*groupBoxStatus.Height/5;
-            for (int i = 0; i < 3; i++)
-                listViewMonitor.Columns[i].Width = listViewMonitor.Width / 3-2;
-            listViewMonitor.Enabled = false;
-
-            listViewData.Top = listViewMonitor.Bottom + groupBoxStatus.Left;
-            listViewData.Left = listViewMonitor.Left;
-            listViewData.Width = listViewInfo.Width;
-            listViewData.Height = 2 * groupBoxStatus.Height / 5;
-            for (int i = 0; i < 3; i++)
-                listViewData.Columns[i].Width = listViewMonitor.Width / 3 - 2;
-            listViewData.Enabled = false;
-
-            buttonStart.Size = new Size(listViewMonitor.Width, listViewMonitor.Height / 3);
-            buttonStart.Top = listViewData.Bottom + groupBoxStatus.Left;
-            buttonStart.Left = listViewMonitor.Left;
+            buttonStart.Size = new Size(groupBoxMonitor.Width, groupBoxMonitor.Height / 3);
+            buttonStart.Top = groupBoxData.Bottom + groupBoxStatus.Left;
+            buttonStart.Left = groupBoxMonitor.Left;
             buttonStart.Enabled = false;
 
            
@@ -297,6 +309,12 @@ namespace ABBGeneral
                         buttonClear.Enabled = true;
                         comboBoxTask.Enabled = true;
                         comboBoxModule.Enabled = true;
+                        textBoxRapidList.Enabled = true;
+                        groupBoxData.Enabled = true;
+                        groupBoxMonitor.Enabled = true;
+                        groupBoxInfo.Enabled = true;
+                        groupBoxRapidList.Enabled = true;
+                        groupBoxPERS.Enabled = true;
 
                         ///////////////////////////////////////////////////////////
                         ///开始各项监控事件

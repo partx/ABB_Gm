@@ -117,80 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="columnHeader1.Text" xml:space="preserve">
-    <value>IP Address</value>
-  </data>
-  <data name="columnHeader3.Text" xml:space="preserve">
-    <value>Available</value>
-  </data>
-  <data name="columnHeader4.Text" xml:space="preserve">
-    <value>Virtual</value>
-  </data>
-  <data name="columnHeader5.Text" xml:space="preserve">
-    <value>System Name</value>
-  </data>
-  <data name="columnHeader6.Text" xml:space="preserve">
-    <value>RobotWare Version</value>
-  </data>
-  <data name="columnHeader7.Text" xml:space="preserve">
-    <value>Controller Name</value>
-  </data>
-  <data name="groupBoxStatus.Text" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="columnHeader8.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="columnHeader9.Text" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="columnHeader11.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="columnHeader12.Text" xml:space="preserve">
-    <value>Value</value>
-  </data>
-  <data name="columnHeader13.Text" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="buttonStart.Text" xml:space="preserve">
-    <value>Double-click signal name in signals table and input PERS name to textbox ,chick me start monitor.</value>
-  </data>
-  <data name="buttonInput.Text" xml:space="preserve">
-    <value>Input</value>
-  </data>
-  <data name="columnHeader10.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="columnHeader14.Text" xml:space="preserve">
-    <value>Value</value>
-  </data>
-  <data name="columnHeader15.Text" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="buttonClear.Text" xml:space="preserve">
-    <value>Clear All</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="englishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 26</value>
+  <data name="listViewController.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 260</value>
   </data>
-  <data name="中文ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 26</value>
+  <data name="labelStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 92</value>
   </data>
-  <data name="语言ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 24</value>
+  <data name="pictureBoxExecStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 143</value>
   </data>
-  <data name="语言ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Language</value>
+  <data name="pictureBoxStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 80</value>
   </data>
-  <data name="退出ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 24</value>
+  <data name="pictureBoxMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 24</value>
   </data>
-  <data name="退出ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Exit</value>
+  <data name="listViewInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>977, 3</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ABB General Monitor</value>
+  <data name="listViewMonitor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>468, 298</value>
+  </data>
+  <data name="buttonStart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>391, 192</value>
+  </data>
+  <data name="textBoxName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>389, 41</value>
+  </data>
+  <data name="comboBoxType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>389, 72</value>
+  </data>
+  <data name="buttonInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>389, 159</value>
+  </data>
+  <data name="listViewData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>644, 3</value>
+  </data>
+  <data name="buttonClear.Location" type="System.Drawing.Point, System.Drawing">
+    <value>391, 12</value>
+  </data>
+  <data name="comboBoxTask.Location" type="System.Drawing.Point, System.Drawing">
+    <value>391, 101</value>
+  </data>
+  <data name="comboBoxModule.Location" type="System.Drawing.Point, System.Drawing">
+    <value>391, 130</value>
   </data>
 </root>
