@@ -19,7 +19,6 @@ Updata logs
 
 | Date             | Description                  
  ----------------- | ---------------------------- 
-| 2017.11.14       | `Update UI      `            
-| 2017.11.13       | `First upload`          
-|
+| 2017.11.14       | `Update UI & README.md     `           
+| 2017.11.13       | `First upload`          
 
