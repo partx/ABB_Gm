@@ -16,6 +16,7 @@ using ABB.Robotics.Controllers.RapidDomain;
 using ABB.Robotics.Controllers.IOSystemDomain;
 using System.Threading;
 using System.Resources;
+using System.Drawing.Drawing2D;
 
 namespace ABBGeneral
 {
@@ -46,7 +47,6 @@ namespace ABBGeneral
             debugMess = new ArrayList();
             varList = new ArrayList();
             ioList = new ArrayList();
-
             /////////////////////////////////////////////////////////////
             ///建立一个互斥量防止程序再次运行，同一时间只允许运行一个实例
             //////////////////////////////////////////////////////////////
@@ -108,30 +108,30 @@ namespace ABBGeneral
             groupBoxStatus.Height = this.ClientRectangle.Bottom - listViewController.Bottom - 2 * listViewController.Top;
             groupBoxStatus.Enabled = false;
 
-            pictureBoxMode.Size = new Size(groupBoxStatus.Width / 4, groupBoxStatus.Width / 4);
-            pictureBoxMode.Top = groupBoxStatus.Height/5;
+            pictureBoxMode.Size=new Size(groupBoxStatus.Width / 4,groupBoxStatus.Width / 4);
+            pictureBoxMode.Top = groupBoxStatus.Height / 5;
             pictureBoxMode.Left = groupBoxStatus.Width / 2;
-            pictureBoxMode.Image = (Image)Properties.Resources.red;
+            pictureBoxMode.BackColor = Color.White;
 
-            pictureBoxStatus.Size = pictureBoxMode.Size;
-            pictureBoxStatus.Top = pictureBoxMode.Top * 2;
-            pictureBoxStatus.Left = pictureBoxMode.Left;
-            pictureBoxStatus.Image = (Image)Properties.Resources.red;
+            pictureBoxStatus.Size=new Size(groupBoxStatus.Width / 4,groupBoxStatus.Width / 4);
+            pictureBoxStatus.Top = 2 * groupBoxStatus.Height / 5;
+            pictureBoxStatus.Left = groupBoxStatus.Width / 2;
+            pictureBoxStatus.BackColor = Color.White;
 
-            pictureBoxExecStatus.Size = pictureBoxMode.Size;
-            pictureBoxExecStatus.Top = pictureBoxMode.Top * 3;
-            pictureBoxExecStatus.Left = pictureBoxMode.Left;
-            pictureBoxExecStatus.Image = (Image)Properties.Resources.red;
+            pictureBoxExecStatus.Size=new Size(groupBoxStatus.Width / 4,groupBoxStatus.Width / 4);
+            pictureBoxExecStatus.Top = 3 * groupBoxStatus.Height / 5;
+            pictureBoxExecStatus.Left = groupBoxStatus.Width / 2;
+            pictureBoxExecStatus.BackColor = Color.White;
 
-            labelMode.Top = pictureBoxMode.Top-labelMode.Height;
+            labelMode.Top = groupBoxStatus.Height / 5 - labelMode.Height;
             labelMode.Left = groupBoxStatus.Left/2;
             labelMode.Text = "N/A";
 
-            labelStatus.Top = pictureBoxStatus.Top-labelStatus.Height;
+            labelStatus.Top = 2*groupBoxStatus.Height / 5 - labelStatus.Height;
             labelStatus.Left = groupBoxStatus.Left / 2;
             labelStatus.Text = "N/A";
 
-            labelExecStatus.Top = pictureBoxExecStatus.Top-labelExecStatus.Height;
+            labelExecStatus.Top = 3*groupBoxStatus.Height / 5 - labelExecStatus.Height;
             labelExecStatus.Left = groupBoxStatus.Left / 2;
             labelExecStatus.Text = "N/A";
 
@@ -560,6 +560,9 @@ namespace ABBGeneral
                     MessageBox.Show("error，check task name,module name,PERS name");
                 }
             }
+            
+            
+            
         }
         #endregion
 
@@ -623,21 +626,27 @@ namespace ABBGeneral
 
         private void RapidExecStatusChanged(object sender, ExecutionStatusChangedEventArgs e)
         {
+            
+            int led2Wid = groupBoxStatus.Width / 4;
+            int led2Hei = groupBoxStatus.Width / 4;
+            int led2Top = 3 * groupBoxStatus.Height / 5;
+            int led2Left = groupBoxStatus.Width / 2;
+
             labelExecStatus.Text = e.Status.ToString();
             if (labelExecStatus.Text == ExecutionStatus.Running.ToString())
             {
-                pictureBoxExecStatus.Image = Properties.Resources.green;
+                pictureBoxExecStatus.BackColor=Color.Green;
                 labelExecStatus.ForeColor = Color.Green;
             }
 
             else if (labelExecStatus.Text == ExecutionStatus.Unknown.ToString())
             {
-                pictureBoxExecStatus.Image = Properties.Resources.yellow;
+                pictureBoxExecStatus.BackColor=Color.Yellow;
                 labelExecStatus.ForeColor = Color.Yellow;
             }
             else
             {
-                pictureBoxExecStatus.Image = Properties.Resources.red;
+                pictureBoxExecStatus.BackColor=Color.Red;
                 labelExecStatus.ForeColor = Color.Red;
             }
         }
@@ -655,12 +664,12 @@ namespace ABBGeneral
 
             if(labelStatus.Text==ControllerState.MotorsOn.ToString())
             {
-                pictureBoxStatus.Image = Properties.Resources.green;
+                pictureBoxStatus.BackColor=Color.Green;
                 labelStatus.ForeColor = Color.Green;
             }
             else
             {
-                pictureBoxStatus.Image = Properties.Resources.red;
+                pictureBoxStatus.BackColor=Color.Red;
                 labelStatus.ForeColor = Color.Red;
             }
         }
@@ -674,40 +683,43 @@ namespace ABBGeneral
 
         private void ModeIsChanged(object sender, OperatingModeChangeEventArgs e)
         {
+            
+
             labelMode.Text = e.NewMode.ToString();
             if (labelMode.Text == ControllerOperatingMode.Auto.ToString())
             {
-                pictureBoxMode.Image = Properties.Resources.green;
+                pictureBoxMode.BackColor=Color.Green;
                 labelMode.ForeColor = Color.Green;
+
             }
             else if (labelMode.Text == ControllerOperatingMode.AutoChange.ToString())
             {
-                pictureBoxMode.Image = Properties.Resources.green;
+                pictureBoxMode.BackColor=Color.Cyan;
                 labelMode.ForeColor = Color.Cyan;
             }
             else if (labelMode.Text == ControllerOperatingMode.Init.ToString())
             {
-                pictureBoxMode.Image = Properties.Resources.red;
+                pictureBoxMode.BackColor = Color.Blue;
                 labelMode.ForeColor = Color.Blue;
             }
             else if (labelMode.Text == ControllerOperatingMode.ManualFullSpeed.ToString())
             {
-                pictureBoxMode.Image = Properties.Resources.yellow;
+                pictureBoxMode.BackColor = Color.Orange;
                 labelMode.ForeColor = Color.Orange;
             }
             else if (labelMode.Text == ControllerOperatingMode.ManualFullSpeedChange.ToString())
             {
-                pictureBoxMode.Image = Properties.Resources.yellow;
+                pictureBoxMode.BackColor = Color.YellowGreen;
                 labelMode.ForeColor = Color.YellowGreen;
             }
             else if (labelMode.Text == ControllerOperatingMode.ManualReducedSpeed.ToString())
             {
-                pictureBoxMode.Image = Properties.Resources.yellow;
+                pictureBoxMode.BackColor = Color.Yellow;
                 labelMode.ForeColor = Color.Yellow;
             }
             else
             {
-                pictureBoxMode.Image = Properties.Resources.red;
+                pictureBoxMode.BackColor = Color.Red;
                 labelMode.ForeColor = Color.Red;
             }
         }
@@ -782,8 +794,5 @@ namespace ABBGeneral
             }
         }
 
-     
-
-       
     }
 }

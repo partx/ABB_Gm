@@ -41,9 +41,6 @@
             this.labelExecStatus = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.labelMode = new System.Windows.Forms.Label();
-            this.pictureBoxExecStatus = new System.Windows.Forms.PictureBox();
-            this.pictureBoxStatus = new System.Windows.Forms.PictureBox();
-            this.pictureBoxMode = new System.Windows.Forms.PictureBox();
             this.textBoxRapidList = new System.Windows.Forms.TextBox();
             this.listViewInfo = new System.Windows.Forms.ListView();
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -68,15 +65,18 @@
             this.groupBoxMonitor = new System.Windows.Forms.GroupBox();
             this.groupBoxData = new System.Windows.Forms.GroupBox();
             this.groupBoxPERS = new System.Windows.Forms.GroupBox();
+            this.pictureBoxMode = new System.Windows.Forms.PictureBox();
+            this.pictureBoxStatus = new System.Windows.Forms.PictureBox();
+            this.pictureBoxExecStatus = new System.Windows.Forms.PictureBox();
             this.groupBoxStatus.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxExecStatus)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStatus)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMode)).BeginInit();
             this.groupBoxRapidList.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             this.groupBoxMonitor.SuspendLayout();
             this.groupBoxData.SuspendLayout();
             this.groupBoxPERS.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStatus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxExecStatus)).BeginInit();
             this.SuspendLayout();
             // 
             // labelEnDebug
@@ -140,12 +140,12 @@
             // 
             // groupBoxStatus
             // 
-            this.groupBoxStatus.Controls.Add(this.labelExecStatus);
-            this.groupBoxStatus.Controls.Add(this.labelStatus);
-            this.groupBoxStatus.Controls.Add(this.labelMode);
             this.groupBoxStatus.Controls.Add(this.pictureBoxExecStatus);
             this.groupBoxStatus.Controls.Add(this.pictureBoxStatus);
             this.groupBoxStatus.Controls.Add(this.pictureBoxMode);
+            this.groupBoxStatus.Controls.Add(this.labelExecStatus);
+            this.groupBoxStatus.Controls.Add(this.labelStatus);
+            this.groupBoxStatus.Controls.Add(this.labelMode);
             this.groupBoxStatus.Location = new System.Drawing.Point(12, 298);
             this.groupBoxStatus.Name = "groupBoxStatus";
             this.groupBoxStatus.Size = new System.Drawing.Size(200, 223);
@@ -183,33 +183,6 @@
             this.labelMode.Size = new System.Drawing.Size(68, 17);
             this.labelMode.TabIndex = 4;
             this.labelMode.Text = "label1";
-            // 
-            // pictureBoxExecStatus
-            // 
-            this.pictureBoxExecStatus.Location = new System.Drawing.Point(80, 143);
-            this.pictureBoxExecStatus.Name = "pictureBoxExecStatus";
-            this.pictureBoxExecStatus.Size = new System.Drawing.Size(100, 50);
-            this.pictureBoxExecStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxExecStatus.TabIndex = 3;
-            this.pictureBoxExecStatus.TabStop = false;
-            // 
-            // pictureBoxStatus
-            // 
-            this.pictureBoxStatus.Location = new System.Drawing.Point(80, 87);
-            this.pictureBoxStatus.Name = "pictureBoxStatus";
-            this.pictureBoxStatus.Size = new System.Drawing.Size(100, 50);
-            this.pictureBoxStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxStatus.TabIndex = 1;
-            this.pictureBoxStatus.TabStop = false;
-            // 
-            // pictureBoxMode
-            // 
-            this.pictureBoxMode.Location = new System.Drawing.Point(80, 24);
-            this.pictureBoxMode.Name = "pictureBoxMode";
-            this.pictureBoxMode.Size = new System.Drawing.Size(100, 50);
-            this.pictureBoxMode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxMode.TabIndex = 0;
-            this.pictureBoxMode.TabStop = false;
             // 
             // textBoxRapidList
             // 
@@ -428,11 +401,34 @@
             this.groupBoxPERS.TabStop = false;
             this.groupBoxPERS.Text = "Input PERS Information";
             // 
+            // pictureBoxMode
+            // 
+            this.pictureBoxMode.Location = new System.Drawing.Point(91, 32);
+            this.pictureBoxMode.Name = "pictureBoxMode";
+            this.pictureBoxMode.Size = new System.Drawing.Size(60, 50);
+            this.pictureBoxMode.TabIndex = 8;
+            this.pictureBoxMode.TabStop = false;
+            // 
+            // pictureBoxStatus
+            // 
+            this.pictureBoxStatus.Location = new System.Drawing.Point(94, 88);
+            this.pictureBoxStatus.Name = "pictureBoxStatus";
+            this.pictureBoxStatus.Size = new System.Drawing.Size(57, 50);
+            this.pictureBoxStatus.TabIndex = 9;
+            this.pictureBoxStatus.TabStop = false;
+            // 
+            // pictureBoxExecStatus
+            // 
+            this.pictureBoxExecStatus.Location = new System.Drawing.Point(91, 143);
+            this.pictureBoxExecStatus.Name = "pictureBoxExecStatus";
+            this.pictureBoxExecStatus.Size = new System.Drawing.Size(60, 50);
+            this.pictureBoxExecStatus.TabIndex = 10;
+            this.pictureBoxExecStatus.TabStop = false;
+            // 
             // mainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::ABBGeneral.Properties.Resources.background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1416, 678);
             this.Controls.Add(this.groupBoxPERS);
@@ -453,9 +449,6 @@
             this.Load += new System.EventHandler(this.mainForm_Load);
             this.groupBoxStatus.ResumeLayout(false);
             this.groupBoxStatus.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxExecStatus)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStatus)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMode)).EndInit();
             this.groupBoxRapidList.ResumeLayout(false);
             this.groupBoxRapidList.PerformLayout();
             this.groupBoxInfo.ResumeLayout(false);
@@ -463,6 +456,9 @@
             this.groupBoxData.ResumeLayout(false);
             this.groupBoxPERS.ResumeLayout(false);
             this.groupBoxPERS.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStatus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxExecStatus)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -480,9 +476,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.GroupBox groupBoxStatus;
-        private System.Windows.Forms.PictureBox pictureBoxExecStatus;
-        private System.Windows.Forms.PictureBox pictureBoxStatus;
-        private System.Windows.Forms.PictureBox pictureBoxMode;
         private System.Windows.Forms.Label labelExecStatus;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Label labelMode;
@@ -510,6 +503,9 @@
         private System.Windows.Forms.GroupBox groupBoxMonitor;
         private System.Windows.Forms.GroupBox groupBoxData;
         private System.Windows.Forms.GroupBox groupBoxPERS;
+        private System.Windows.Forms.PictureBox pictureBoxExecStatus;
+        private System.Windows.Forms.PictureBox pictureBoxStatus;
+        private System.Windows.Forms.PictureBox pictureBoxMode;
     }
 }
 

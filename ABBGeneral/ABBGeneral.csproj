@@ -88,12 +88,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="image\background.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="image\green.bmp" />
-    <Content Include="image\red.bmp" />
-    <Content Include="image\yellow.bmp" />
+    <Content Include="image\background.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -121,13 +121,5 @@
   <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\image\background.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\image\green.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\image\red.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\image\yellow.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+
 </root>
