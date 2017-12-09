@@ -17,3 +17,4 @@ D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\ABBGeneral.mainFrm.en-US.resources
 D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\ABBGeneral.mainFrm.en.resources
 D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\en-US\ABBGeneral.resources.dll
 D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\en\ABBGeneral.resources.dll
+D:\VC\ABB\ABBGeneral\ABBGeneral\obj\Debug\ABBGeneral.wizard.resources
