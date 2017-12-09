@@ -2,7 +2,8 @@
 ===================
 
 
-Hey! This is C-sharp project for monitor ABB robotics controller. (include input/output signals & PERS).It's use ABB PC SDK.
+Hey! This is C-sharp project for monitor ABB robotics controller. (include input/output signals & PERS).It's use ABB PC SDK with VS 2013.
+Enjoy it!
 
 ----------
 Overview
@@ -11,7 +12,7 @@ Overview
 
 Quick Start
 -------------
-![enter image description here](https://github.com/partx/ABB_Gm/blob/master/readme.png?raw=true)
+![enter image description here](https://github.com/partx/ABB_Gm/blob/master/readme.jpg?raw=true)
 
 ----------
 
