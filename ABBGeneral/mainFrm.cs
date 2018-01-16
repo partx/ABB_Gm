@@ -17,23 +17,27 @@ using ABB.Robotics.Controllers.IOSystemDomain;
 using System.Threading;
 using System.Resources;
 using System.Drawing.Drawing2D;
+using DrawMapClass;
 
 namespace ABBGeneral
 {
+    
     public partial class mainFrm : Form
     {
-        #region 全局变量表
-        static System.Threading.Mutex _mutex;   //一个互斥量，防止程序再次运行
-        static ArrayList debugMess = null;
+        #region global variable
+        static System.Threading.Mutex _mutex;   //
+
         static ArrayList varList = null;
         static ArrayList ioList = null;
         private string taskName ;
         private string moduleName;
-        private NetworkScanner netScanner = null;   //ABB相关        
+        private NetworkScanner netScanner = null;   //ABB        
         private NetworkWatcher netWatcher = null;
         private ABB.Robotics.Controllers.RapidDomain.Task[] tasks = null;
         private Controller ctl = null;
         private RapidData rd = null;
+        
+
         
         #endregion 
         public mainFrm()
@@ -41,22 +45,23 @@ namespace ABBGeneral
             InitializeComponent();
         }
 
-        #region 窗体加载时动作
+        
+        #region winform loading
         private void mainForm_Load(object sender, EventArgs e)
         {
-            debugMess = new ArrayList();
+
             varList = new ArrayList();
             ioList = new ArrayList();
 
             
             /////////////////////////////////////////////////////////////
-            ///建立一个互斥量防止程序再次运行，同一时间只允许运行一个实例
+            ///create a mutex to only a instance
             //////////////////////////////////////////////////////////////
            
                 bool createNew;
                 Attribute guid_attr = Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(GuidAttribute));
                 string guid = ((GuidAttribute)guid_attr).Value;
-                debugMess.Add("guid: " + guid);
+
                 _mutex = new System.Threading.Mutex(true, guid, out createNew);
                 if (false == createNew)
                 {
@@ -67,177 +72,193 @@ namespace ABBGeneral
            
 
             /////////////////////////////////////////////////////////////
-            ///开启ABB网络监听并实例化一些部件
+            ///starting watcher
             ////////////////////////////////////////////////////////////
-            netScanner = new NetworkScanner();      //实例化网络扫描器
+                netScanner = new NetworkScanner();     //
 
-            if(this.netWatcher !=null)          //实例化网络监听器
+            if(this.netWatcher !=null)          //
             {
-                this.netWatcher.Dispose();      //若存在，则清除
+                this.netWatcher.Dispose();      //
                 this.netWatcher = null;
             }
-            this.netWatcher = new NetworkWatcher(netScanner.Controllers);       //监视网络中活动的控制器
-            this.netWatcher.Found += new EventHandler<NetworkWatcherEventArgs>(HandleFoundEvent);   //当有新控制器找到，发生这个事件
-            this.netWatcher.Lost += new EventHandler<NetworkWatcherEventArgs>(HandleLostEvent);     //当有控制器离线，发生这个事件
-            this.netWatcher.EnableRaisingEvents = true;         //激活事件
+            this.netWatcher = new NetworkWatcher(netScanner.Controllers);       //watching controller
+            this.netWatcher.Found += new EventHandler<NetworkWatcherEventArgs>(HandleFoundEvent);   //online event
+            this.netWatcher.Lost += new EventHandler<NetworkWatcherEventArgs>(HandleLostEvent);     //offline event
+            this.netWatcher.EnableRaisingEvents = true;         //active event
 
             ///////////////////////////////////////////////////////////
-            ///窗体绘制
+            ///drawing winform
             //////////////////////////////////////////////////////////
+            
             int ledWidth = SystemInformation.VirtualScreen.Width;
             int ledHeight = SystemInformation.VirtualScreen.Height;
-            this.MaximumSize=new Size(3*ledWidth/4,3*ledHeight/4);    //固定窗体
-            this.MinimumSize=new Size(3*ledWidth/4,3*ledHeight/4);
-            this.Top = (ledHeight - this.Height) / 2;
-            this.Left = (ledWidth - this.Width) / 2;
-            debugMess.Add("Width: " + this.MaximumSize.Width.ToString());
-            debugMess.Add("Height: " + this.MaximumSize.Height.ToString());
+            this.MaximumSize=new Size(ledWidth,ledHeight);    //
+            this.MinimumSize=new Size(ledWidth,ledHeight);
+            ///calculate some var
+            panelHide.Top = 0;
+            panelHide.Left = 0;
+            panelHide.Width = ledWidth;
+            panelHide.Height = ledHeight;
             
-            labelEnDebug.Top = this.ClientRectangle.Bottom - 15;
-            labelEnDebug.Left = this.ClientRectangle.Right - 15;
+            DrawMap.GoldenSectionST gsTop, gsLeft;
+            
+            double topOffset = ledHeight;
+            double leftOffset = ledWidth;
+            for (int i = 0; i < 4; i++)
+            {
+                gsTop = DrawMap.GoldenSection(topOffset);
+                topOffset = gsTop.shortGS;
+                gsLeft = DrawMap.GoldenSection(leftOffset);
+                leftOffset = gsLeft.shortGS;
+            }
+            int topO = (int)topOffset;
+            int leftO = (int)leftOffset;
 
-            listViewController.Top = 12;
-            listViewController.Left = listViewController.Top;
-            listViewController.Width = this.ClientRectangle.Width - 2*listViewController.Left;
-            listViewController.Height = this.ClientRectangle.Height / 3;
-            int colWidth=listViewController.Width/7;
-            for (int i = 0; i < 7;i++ )
+            drawMap1.Top = 0;
+            drawMap1.Left = 0;
+            drawMap1.Width=leftO + 19 * topO;
+            drawMap1.Height= 5 * topO + 15 * (topO / 3);
+
+            int topOff = drawMap1.Height;
+            int leftOff = drawMap1.Width;
+
+            listViewController.Top = topO;
+            listViewController.Left = leftOff;
+            listViewController.Width = this.ClientRectangle.Width - leftOff - leftO;
+            listViewController.Height = topOff;
+            int colWidth = listViewController.Width / 7;
+            for (int i = 0; i < 7; i++)
                 listViewController.Columns[i].Width = colWidth;
 
-            groupBoxStatus.Top = listViewController.Bottom + listViewController.Left;
-            groupBoxStatus.Left = listViewController.Left;
-            groupBoxStatus.Width = listViewController.Width / 5;
-            groupBoxStatus.Height = this.ClientRectangle.Bottom - listViewController.Bottom - 2 * listViewController.Top;
-            groupBoxStatus.Enabled = false;
+            panelLeftTop.Top = topOff + 2 * topO;
+            panelLeftTop.Left = leftO;
+            panelLeftTop.Width = listViewController.Width/2;
+            panelLeftTop.Height = (this.ClientRectangle.Height - topOff-3 * topO);
 
-            pictureBoxMode.Size=new Size(groupBoxStatus.Width / 4,groupBoxStatus.Width / 4);
-            pictureBoxMode.Top = groupBoxStatus.Height / 5;
-            pictureBoxMode.Left = groupBoxStatus.Width / 2;
-            pictureBoxMode.BackColor = Color.White;
+            panelLeftBottom.Top = panelLeftTop.Top;
+            panelLeftBottom.Left = panelLeftTop.Right+leftO;
+            panelLeftBottom.Width = panelLeftTop.Width;
+            panelLeftBottom.Height = panelLeftTop.Height;
 
-            pictureBoxStatus.Size=new Size(groupBoxStatus.Width / 4,groupBoxStatus.Width / 4);
-            pictureBoxStatus.Top = 2 * groupBoxStatus.Height / 5;
-            pictureBoxStatus.Left = groupBoxStatus.Width / 2;
-            pictureBoxStatus.BackColor = Color.White;
-
-            pictureBoxExecStatus.Size=new Size(groupBoxStatus.Width / 4,groupBoxStatus.Width / 4);
-            pictureBoxExecStatus.Top = 3 * groupBoxStatus.Height / 5;
-            pictureBoxExecStatus.Left = groupBoxStatus.Width / 2;
-            pictureBoxExecStatus.BackColor = Color.White;
-
-            labelMode.Top = groupBoxStatus.Height / 5 - labelMode.Height;
-            labelMode.Left = groupBoxStatus.Left/2;
+            int labelWidth = listViewController.Right - panelLeftBottom.Right - leftO;
+            int labelHeight = topO;
+            labelMode.Top = panelLeftTop.Top;
+            labelMode.Left = panelLeftBottom.Right + leftO;
+            labelMode.Size = new Size(labelWidth, labelHeight);
             labelMode.Text = "N/A";
 
-            labelStatus.Top = 2*groupBoxStatus.Height / 5 - labelStatus.Height;
-            labelStatus.Left = groupBoxStatus.Left / 2;
+            labelStatus.Top = labelMode.Bottom + topO / 2;
+            labelStatus.Left = labelMode.Left;
+            labelStatus.Size = new Size(labelWidth, labelHeight);
             labelStatus.Text = "N/A";
 
-            labelExecStatus.Top = 3*groupBoxStatus.Height / 5 - labelExecStatus.Height;
-            labelExecStatus.Left = groupBoxStatus.Left / 2;
+            labelExecStatus.Top = labelStatus.Bottom + topO / 2;
+            labelExecStatus.Left = labelMode.Left;
+            labelExecStatus.Size = new Size(labelWidth, labelHeight);
             labelExecStatus.Text = "N/A";
 
-            groupBoxRapidList.Top = groupBoxStatus.Top;
-            groupBoxRapidList.Left = groupBoxStatus.Right + groupBoxStatus.Left;
-            groupBoxRapidList.Width = (this.ClientRectangle.Width - (5 * groupBoxStatus.Left + groupBoxStatus.Width)) / 3;
-            groupBoxRapidList.Height = 4 * groupBoxStatus.Height / 5;
-            groupBoxRapidList.Enabled = false;
+            buttonExit.Size = new Size(labelWidth, 2 * labelHeight);
+            buttonExit.Top = panelLeftBottom.Bottom - 2 * labelHeight;
+            buttonExit.Left = labelMode.Left;
+            buttonExit.Enabled = true;
 
+            buttonStart.Size = new Size(labelWidth, 2 * labelHeight);
+            buttonStart.Top = panelLeftBottom.Bottom - 4 * labelHeight - topO;
+            buttonStart.Left = labelMode.Left;
+            buttonStart.Enabled = false;
+
+            textBoxRapidList.Top = labelExecStatus.Bottom + topO;
+            textBoxRapidList.Left = labelMode.Left;
+            textBoxRapidList.Width = labelWidth;
+            textBoxRapidList.Height = buttonStart.Top - labelExecStatus.Bottom - 2 * topO;
             textBoxRapidList.Enabled = false;
 
-            groupBoxInfo.Top = groupBoxStatus.Top;
-            groupBoxInfo.Left = groupBoxRapidList.Right + groupBoxStatus.Left;
-            groupBoxInfo.Width = groupBoxRapidList.Width;
-            groupBoxInfo.Height = 4 * groupBoxStatus.Height / 5;
+
+            buttonIO.Top = topO;
+            buttonIO.Left = leftO;
+            buttonIO.Size=new Size(panelLeftTop.Width - 2 * leftO,2*topO);
+            buttonIO.Enabled = false;
+
+            groupBoxInfo.Top = buttonIO.Bottom;
+            groupBoxInfo.Left = leftO;
+            groupBoxInfo.Width = panelLeftTop.Width-2*leftO;
+            groupBoxInfo.Height = panelLeftTop.Height-4*topO;
             for (int i = 0; i < 2; i++)
                 listViewInfo.Columns[i].Width = listViewInfo.Width / 2 - 5;
             listViewInfo.Enabled = false;
             groupBoxInfo.Enabled = false;
+            groupBoxInfo.Visible = false;
 
-            groupBoxMonitor.Top = groupBoxStatus.Top;
-            groupBoxMonitor.Left = groupBoxInfo.Right + groupBoxStatus.Left;
-            groupBoxMonitor.Width = groupBoxInfo.Width;
-            groupBoxMonitor.Height = 2 * groupBoxStatus.Height / 5;
+            groupBoxMonitor.Top = buttonIO.Bottom;
+            groupBoxMonitor.Left = leftO;
+            groupBoxMonitor.Width = panelLeftTop.Width - 2 * leftO;
+            groupBoxMonitor.Height = panelLeftTop.Height - 4 * topO;
             for (int i = 0; i < 3; i++)
                 listViewMonitor.Columns[i].Width = listViewMonitor.Width / 3 - 2;
             listViewMonitor.Enabled = false;
             groupBoxMonitor.Enabled = false;
 
-            groupBoxData.Top = groupBoxMonitor.Bottom + groupBoxStatus.Left;
-            groupBoxData.Left = groupBoxMonitor.Left;
-            groupBoxData.Width = groupBoxInfo.Width;
-            groupBoxData.Height = 2 * groupBoxStatus.Height / 5;
-            for (int i = 0; i < 3; i++)
-                listViewData.Columns[i].Width = listViewMonitor.Width / 3 - 2;
+            groupBoxPERS.Top = topO;
+            groupBoxPERS.Left = leftO;
+            groupBoxPERS.Width = panelLeftTop.Width - 2 * leftO;
+            groupBoxPERS.Height = 7 * topO;
+            groupBoxPERS.Enabled = false;
+
+            groupBoxData.Top = groupBoxPERS.Bottom+topO;
+            groupBoxData.Left = leftO;
+            groupBoxData.Width = panelLeftTop.Width - 2 * leftO;
+            groupBoxData.Height = panelLeftBottom.Height - groupBoxPERS.Bottom - 2*topO;
+            listViewData.Columns[0].Width = listViewMonitor.Width / 3 - 2;
+            listViewData.Columns[1].Width = listViewMonitor.Width - listViewData.Columns[0].Width;
             listViewData.Enabled = false;
             groupBoxData.Enabled = false;
 
-            groupBoxPERS.Top = groupBoxRapidList.Bottom + groupBoxStatus.Left;
-            groupBoxPERS.Left = groupBoxRapidList.Left;
-            groupBoxPERS.Width = groupBoxInfo.Right - groupBoxPERS.Left;
-            groupBoxPERS.Height = groupBoxStatus.Bottom - groupBoxPERS.Top;
-            groupBoxPERS.Enabled = false;
-
-            comboBoxTask.Top = groupBoxStatus.Left;
-            comboBoxTask.Left = groupBoxStatus.Left;
-            comboBoxTask.Width = groupBoxRapidList.Width / 2 - 2*groupBoxStatus.Left / 2;
+            comboBoxTask.Top = topO;
+            comboBoxTask.Left = leftO;
+            comboBoxTask.Width = (groupBoxData.Width - 3*leftO)/2;
             comboBoxTask.Enabled = false;
 
-            comboBoxModule.Top = comboBoxTask.Top;
-            comboBoxModule.Left = comboBoxTask.Right + groupBoxStatus.Left;
+            comboBoxModule.Top = topO;
+            comboBoxModule.Left = comboBoxTask.Right + leftO;
             comboBoxModule.Width = comboBoxTask.Width;
             comboBoxModule.Enabled = false;
 
-            textBoxName.Top = comboBoxTask.Top;
-            textBoxName.Left = comboBoxModule.Right+groupBoxStatus.Left;
+            textBoxName.Top = comboBoxModule.Bottom+topO/2;
+            textBoxName.Left = leftO;
             textBoxName.Width = comboBoxTask.Width;
             textBoxName.Enabled = false;
 
-            comboBoxType.Top = textBoxName.Top;
-            comboBoxType.Left = textBoxName.Right + groupBoxStatus.Left;
-            comboBoxType.Width = textBoxName.Width;
-            comboBoxType.SelectedIndex = 0;
-            comboBoxType.Enabled = false;
-
-            buttonInput.Top = textBoxName.Bottom + groupBoxStatus.Left/3;
-            buttonInput.Left = textBoxName.Left;
+            buttonInput.Top = textBoxName.Bottom + topO/2;
+            buttonInput.Left = leftO;
+            buttonInput.Size = new Size(textBoxName.Width, textBoxName.Height);
             buttonInput.Enabled = false;
 
-            buttonClear.Size = buttonInput.Size;
             buttonClear.Top = buttonInput.Top;
-            buttonClear.Left = comboBoxType.Left;
+            buttonClear.Left = comboBoxModule.Left;
+            buttonClear.Size = new Size(textBoxName.Width, textBoxName.Height);
             buttonClear.Enabled = false;
 
-            buttonStart.Size = new Size(groupBoxMonitor.Width, groupBoxMonitor.Height / 3);
-            buttonStart.Top = groupBoxData.Bottom + groupBoxStatus.Left;
-            buttonStart.Left = groupBoxMonitor.Left;
-            buttonStart.Enabled = false;
 
+            panelHide.Visible = false;
            
 
             //////////////////////////////////////////////////////////
-            ///开始行动，在网络上扫描控制器并添加到 listView里
+            ///scaning
             /////////////////////////////////////////////////////////
             ScanControllerToListView();
 
-            /////////////////////////////////////////////////////////
-            ///显示帮助
-            ////////////////////////////////////////////////////////
-            wizard wi = new wizard();
-
-            wi.Show();
-            wi.TopMost = true;
+            
         }
         #endregion
-
-        #region 把扫描到的控制器填入listView控件里
+       
+        #region fill to listview 
         private void ScanControllerToListView()
         {
             netScanner.Scan();
             ControllerInfoCollection controllers = netScanner.Controllers;
 
             /////////////////////////////////////////////////////////////////
-            ///填表
+            ///filling
             ////////////////////////////////////////////////////////////////
             listViewController.Items.Clear();
             ListViewItem item = null;
@@ -252,12 +273,12 @@ namespace ABBGeneral
                 item.SubItems.Add(controllerInfo.ControllerName);
                 this.listViewController.Items.Add(item);
                 item.Tag = controllerInfo;
-                debugMess.Add("Tag: " + item.Tag);
+
             }
         }
         #endregion
 
-        #region 寻找到新控制器事件
+        #region finding new controller
         void HandleFoundEvent(object sender,NetworkWatcherEventArgs e)
         {
             this.Invoke(new EventHandler<NetworkWatcherEventArgs>(AddControllerToListView), new Object[] { this, e });
@@ -269,7 +290,7 @@ namespace ABBGeneral
         }
         #endregion
 
-        #region 控制器离线事件
+        #region offline event
         void HandleLostEvent(object sender,NetworkWatcherEventArgs e)
         {
             this.Invoke(new EventHandler<NetworkWatcherEventArgs>(RemoveControllerToListView), new Object[] { this, e });
@@ -280,20 +301,9 @@ namespace ABBGeneral
             ScanControllerToListView();
         }
         #endregion
-        #region 激活彩蛋
-        private void labelEnDebug_Click(object sender, EventArgs e)
-        {
-            string strDebugMess = "";
-            foreach(Object obj in debugMess)
-            {
-                strDebugMess += obj.ToString()+"\n";
-            }
-            MessageBox.Show(strDebugMess);
+      
 
-        }
-        #endregion
-
-        #region 激活选中的控制器
+        #region active controller
         private void listViewController_DoubleClick(object sender, EventArgs e)
         {
             try
@@ -304,13 +314,11 @@ namespace ABBGeneral
                     ControllerInfo controllerInfo = (ControllerInfo)item.Tag;
                     if(controllerInfo.Availability==Availability.Available)
                     {
-                        LogonController(controllerInfo);    //登陆控制器
-                        GetRapid();                         //取得Rapid列表
-                        GetIOAndData();                     //取得IO或数据
+                        LogonController(controllerInfo);    //log on
+                        GetRapid();                         //get rapid list
+                        GetIOAndData();                     //get io and data
 
-                        groupBoxStatus.Enabled=true;
                         textBoxName.Enabled = true;
-                        comboBoxType.Enabled = true;
                         buttonInput.Enabled = true;
                         buttonStart.Enabled = true;
                         listViewInfo.Enabled=true;
@@ -323,15 +331,14 @@ namespace ABBGeneral
                         groupBoxData.Enabled = true;
                         groupBoxMonitor.Enabled = true;
                         groupBoxInfo.Enabled = true;
-                        groupBoxRapidList.Enabled = true;
                         groupBoxPERS.Enabled = true;
-
+                        buttonIO.Enabled = true;
                         ///////////////////////////////////////////////////////////
-                        ///开始各项监控事件
+                        ///moniting
                         ////////////////////////////////////////////////////////////
-                        this.ctl.OperatingModeChanged += new EventHandler<OperatingModeChangeEventArgs>(OperatingModeChanged);	//模式改变事件
-                        this.ctl.StateChanged += new EventHandler<StateChangedEventArgs>(StateChanged);		                    //状态改变事件
-                        this.ctl.Rapid.ExecutionStatusChanged += new EventHandler<ExecutionStatusChangedEventArgs>(RapidExecutionStatusChanged);    //Rapid执行状态改变事件
+                        this.ctl.OperatingModeChanged += new EventHandler<OperatingModeChangeEventArgs>(OperatingModeChanged);	//mode change event
+                        this.ctl.StateChanged += new EventHandler<StateChangedEventArgs>(StateChanged);		                    //state change event
+                        this.ctl.Rapid.ExecutionStatusChanged += new EventHandler<ExecutionStatusChangedEventArgs>(RapidExecutionStatusChanged);    //Rapid execution status change event
             
 
                     }
@@ -349,7 +356,7 @@ namespace ABBGeneral
         }
         #endregion
 
-        #region 登陆ABB控制器
+        #region log on
         private void LogonController(ControllerInfo clrinfo)
         {
             if (ctl != null)
@@ -359,19 +366,19 @@ namespace ABBGeneral
                 ctl = null;
             }
             ctl = ControllerFactory.CreateFrom(clrinfo);
-            ctl.Logon(UserInfo.DefaultUser);            //用默认用户登录控制器
+            ctl.Logon(UserInfo.DefaultUser);            //default user
             
         }
         #endregion
 
-        #region 取得控制器里Rapid列表
+        #region get rapid list
         private void GetRapid()
         {
             try
             {
                 textBoxRapidList.Text = "";
                 
-                tasks = ctl.Rapid.GetTasks();   //取得Rapid列表
+                tasks = ctl.Rapid.GetTasks();   //get rapid list
                 foreach (ABB.Robotics.Controllers.RapidDomain.Task t in tasks)
                 {
                     textBoxRapidList.AppendText("Task: " + t.Name + "\n");
@@ -397,7 +404,7 @@ namespace ABBGeneral
             
         }
         #endregion
-        #region 获取IO信号以及数据列表
+        #region get io and data
         private void GetIOAndData()
         {
             try
@@ -405,7 +412,7 @@ namespace ABBGeneral
                 ListViewItem item;
                 listViewInfo.Items.Clear();
                 /////////////////////////////////////////////////////////////////
-                ///各种输入输出信号
+                ///some signals
                 ////////////////////////////////////////////////////////////////
                 IOFilterTypes sigFilterIn = IOFilterTypes.Digital | IOFilterTypes.Input;
                 SignalCollection signalsIn = ctl.IOSystem.GetSignals(sigFilterIn);
@@ -496,14 +503,13 @@ namespace ABBGeneral
             
         }
         #endregion
-        #region 录入要监控的可变量
+        #region input PERS var if you want to moniting
         private void buttonInput_Click(object sender, EventArgs e)
         {
             if (textBoxName.Text != "" && comboBoxTask.Text.ToString() != "" && comboBoxModule.Text.ToString() != "")
             {
                 ListViewItem item = new ListViewItem(textBoxName.Text);
                 item.SubItems.Add("");
-                item.SubItems.Add(comboBoxType.Text);
                 listViewData.Items.Add(item);
                 varList.Add(textBoxName.Text);
                 
@@ -515,10 +521,12 @@ namespace ABBGeneral
             
         }
         #endregion
-        #region 录入要监控的IO信号
+        #region input IO signals if you want to moniting
         private void listViewInfo_DoubleClick(object sender, EventArgs e)
         {
-
+            buttonIO.Enabled = true;
+            groupBoxInfo.Visible = false;
+            groupBoxMonitor.Visible = true;
             ListViewItem item = new ListViewItem(listViewInfo.SelectedItems[0].Text);
             item.SubItems.Add("");
             item.SubItems.Add(listViewInfo.SelectedItems[0].SubItems[1].Text);
@@ -527,11 +535,11 @@ namespace ABBGeneral
         }
         #endregion
 
-        #region 监控事件的启动子程序
+        #region starting
         private void buttonStart_Click(object sender, EventArgs e)
         {
             ///////////////////////////////////////////////////////////////
-            ///启动各项监控事件
+            ///starting
             ///////////////////////////////////////////////////////////////
             
             Signal sig=null;
@@ -576,7 +584,7 @@ namespace ABBGeneral
         }
         #endregion
 
-        #region 数据监听事件
+        #region moniting PERA data
         void DataValueChanged(object sender, DataValueChangedEventArgs e)
         {
             this.Invoke(new EventHandler<DataValueChangedEventArgs>(DataValueIsChanged), new Object[] { sender, e });
@@ -585,19 +593,31 @@ namespace ABBGeneral
         private void DataValueIsChanged(object sender, DataValueChangedEventArgs e)
         {
             /////////////////////////////////////////////////////////////////////////
-            ///若任意监控变量发生改变，则重新刷新列表
+            ///watching data value
             ////////////////////////////////////////////////////////////////////////
-            for (int i = 0; i < varList.Count; i++)
+            try
             {
-                this.rd = this.ctl.Rapid.GetTask(taskName).GetModule(moduleName).GetRapidData(varList[i].ToString());
-                listViewData.Items[i].SubItems[1].Text = rd.Value.ToString();
+                for (int i = 0; i < varList.Count; i++)
+                {
+
+                    this.rd = this.ctl.Rapid.GetTask(taskName).GetModule(moduleName).GetRapidData(varList[i].ToString());
+
+                    listViewData.Items[i].SubItems[1].Text = rd.Value.ToString();
+                    
+
+                }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
             
 
         }
         #endregion
 
-        #region 输入输出监听事件
+        #region moniting IO signals
         void SignalChanged(object sender, SignalChangedEventArgs e)
         {
             
@@ -607,28 +627,17 @@ namespace ABBGeneral
         private void SignalIsChanged(object sender, SignalChangedEventArgs e)
         {
             
-            if (e.NewSignalState.Value == 1)
+            for (int i = 0; i < ioList.Count; i++)
             {
-                for (int i = 0; i < ioList.Count; i++)
-                {
-                    if (listViewMonitor.Items[i].Text == sender.ToString())
-                        listViewMonitor.Items[i].SubItems[1].Text = "1";
-                }
-                  
+                if(listViewMonitor.Items[i].Text==sender.ToString())
+                    listViewMonitor.Items[i].SubItems[1].Text = e.NewSignalState.Value.ToString();
             }
-            else
-            {
-                for (int i = 0; i < ioList.Count; i++)
-                {
-                    if (listViewMonitor.Items[i].Text == sender.ToString())
-                        listViewMonitor.Items[i].SubItems[1].Text = "0";
-                }
-            }
+            
         }
         #endregion
 
 
-        #region Rapid执行状态改变事件
+        #region Rapid execution status change event
         void RapidExecutionStatusChanged(object sender, ExecutionStatusChangedEventArgs e)
         {
             this.Invoke(new EventHandler<ExecutionStatusChangedEventArgs>(RapidExecStatusChanged), new object[] { this, e });
@@ -637,32 +646,28 @@ namespace ABBGeneral
         private void RapidExecStatusChanged(object sender, ExecutionStatusChangedEventArgs e)
         {
             
-            int led2Wid = groupBoxStatus.Width / 4;
-            int led2Hei = groupBoxStatus.Width / 4;
-            int led2Top = 3 * groupBoxStatus.Height / 5;
-            int led2Left = groupBoxStatus.Width / 2;
-
             labelExecStatus.Text = e.Status.ToString();
             if (labelExecStatus.Text == ExecutionStatus.Running.ToString())
             {
-                pictureBoxExecStatus.BackColor=Color.Green;
-                labelExecStatus.ForeColor = Color.Green;
+                labelExecStatus.BackColor=Color.Green;
+                labelExecStatus.ForeColor = Color.White;
+                ;
             }
 
             else if (labelExecStatus.Text == ExecutionStatus.Unknown.ToString())
             {
-                pictureBoxExecStatus.BackColor=Color.Yellow;
-                labelExecStatus.ForeColor = Color.Yellow;
+                labelExecStatus.BackColor = Color.Yellow;
+                labelExecStatus.ForeColor = Color.White;
             }
             else
             {
-                pictureBoxExecStatus.BackColor=Color.Red;
-                labelExecStatus.ForeColor = Color.Red;
+                labelExecStatus.BackColor = Color.Red;
+                labelExecStatus.ForeColor = Color.White;
             }
         }
         #endregion
 
-        #region 状态改变事件
+        #region state change event
         void StateChanged(object sender,StateChangedEventArgs e)
         {
             this.Invoke(new EventHandler<StateChangedEventArgs>(StateIsChanged), new Object[] { this, e });
@@ -674,18 +679,18 @@ namespace ABBGeneral
 
             if(labelStatus.Text==ControllerState.MotorsOn.ToString())
             {
-                pictureBoxStatus.BackColor=Color.Green;
-                labelStatus.ForeColor = Color.Green;
+                labelStatus.BackColor=Color.Green;
+                labelStatus.ForeColor = Color.White;
             }
             else
             {
-                pictureBoxStatus.BackColor=Color.Red;
-                labelStatus.ForeColor = Color.Red;
+                labelStatus.BackColor = Color.Red;
+                labelStatus.ForeColor = Color.White;
             }
         }
         #endregion
 
-        #region 模式改变事件
+        #region mode change event
         void OperatingModeChanged(object sender, OperatingModeChangeEventArgs e)
         {
             this.Invoke(new EventHandler<OperatingModeChangeEventArgs>(ModeIsChanged),new Object[] {this,e});
@@ -698,39 +703,39 @@ namespace ABBGeneral
             labelMode.Text = e.NewMode.ToString();
             if (labelMode.Text == ControllerOperatingMode.Auto.ToString())
             {
-                pictureBoxMode.BackColor=Color.Green;
-                labelMode.ForeColor = Color.Green;
+                labelMode.BackColor=Color.Green;
+                labelMode.ForeColor = Color.White;
 
             }
             else if (labelMode.Text == ControllerOperatingMode.AutoChange.ToString())
             {
-                pictureBoxMode.BackColor=Color.Cyan;
-                labelMode.ForeColor = Color.Cyan;
+                labelMode.BackColor=Color.Cyan;
+                labelMode.ForeColor = Color.White;
             }
             else if (labelMode.Text == ControllerOperatingMode.Init.ToString())
             {
-                pictureBoxMode.BackColor = Color.Blue;
-                labelMode.ForeColor = Color.Blue;
+                labelMode.BackColor = Color.Blue;
+                labelMode.ForeColor = Color.White;
             }
             else if (labelMode.Text == ControllerOperatingMode.ManualFullSpeed.ToString())
             {
-                pictureBoxMode.BackColor = Color.Orange;
-                labelMode.ForeColor = Color.Orange;
+                labelMode.BackColor = Color.Orange;
+                labelMode.ForeColor = Color.White;
             }
             else if (labelMode.Text == ControllerOperatingMode.ManualFullSpeedChange.ToString())
             {
-                pictureBoxMode.BackColor = Color.YellowGreen;
-                labelMode.ForeColor = Color.YellowGreen;
+                labelMode.BackColor = Color.YellowGreen;
+                labelMode.ForeColor = Color.White;
             }
             else if (labelMode.Text == ControllerOperatingMode.ManualReducedSpeed.ToString())
             {
-                pictureBoxMode.BackColor = Color.Yellow;
-                labelMode.ForeColor = Color.Yellow;
+                labelMode.BackColor = Color.Yellow;
+                labelMode.ForeColor = Color.White;
             }
             else
             {
-                pictureBoxMode.BackColor = Color.Red;
-                labelMode.ForeColor = Color.Red;
+                labelMode.BackColor = Color.Red;
+                labelMode.ForeColor = Color.White;
             }
         }
         #endregion
@@ -739,13 +744,15 @@ namespace ABBGeneral
         {
             listViewMonitor.Items.Clear();
             listViewData.Items.Clear();
+            varList.Clear();
+            ioList.Clear();
         }
 
         private void listViewData_DoubleClick(object sender, EventArgs e)
         {
             RapidData rdt = null;
             string temp = "0";
-            if(listViewData.SelectedItems[0].SubItems[2].Text=="Num")
+            try
             {
                 MessageBox.Show("Zero clearing?    accept in the flexpandent after click OK");
                 rdt = this.ctl.Rapid.GetTask(taskName).GetModule(moduleName).GetRapidData(listViewData.SelectedItems[0].Text.ToString());
@@ -755,9 +762,9 @@ namespace ABBGeneral
                 mas.Dispose();
                 MessageBox.Show("zero clearing");
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Type isn't Num");
+                MessageBox.Show("Type isn't Num. error: "+ex.ToString());
             }
 
             //Release mastership as soon as possible
@@ -784,7 +791,7 @@ namespace ABBGeneral
                             StartResult a;
                             tasks[0].ResetProgramPointer();
                             a=tasks[0].Start();
-                            debugMess.Add(a.ToString());
+                            
 
                         }
                     mc.Dispose();
@@ -802,6 +809,18 @@ namespace ABBGeneral
             {
                 MessageBox.Show("Unexpected error occurred: " + ex.Message);
             }
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void buttonIO_Click(object sender, EventArgs e)
+        {
+            groupBoxMonitor.Visible = false;
+            groupBoxInfo.Visible = true;
+            buttonIO.Enabled = false;
         }
 
     }
