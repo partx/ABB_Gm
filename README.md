@@ -20,27 +20,27 @@ Updata logs
 
 Overview
 -------------
-![enter image description here](https://github.com/partx/ABB_Gm/blob/master/1readme.png?raw=true)
+![1](https://github.com/partx/ABB_Gm/blob/master/1readme.png?raw=true)
 
 Quick Start
 -------------
 1.There is ABB rapid program.
-![enter image description here](https://github.com/partx/ABB_Gm/blob/master/2.jpg?raw=true)
+![2](https://github.com/partx/ABB_Gm/blob/master/2.png?raw=true)
 
 2.Connected a controller.(virtual and Real controller).than double-click the controller name.
-![enter image description here](https://github.com/partx/ABB_Gm/blob/master/3.jpg?raw=true)
+![3](https://github.com/partx/ABB_Gm/blob/master/3.png?raw=true)
 
 3.Add signals.
-![enter image description here](https://github.com/partx/ABB_Gm/blob/master/4.jpg?raw=true)
+![4](https://github.com/partx/ABB_Gm/blob/master/4.png?raw=true)
 
 4.completed add signals.
-![enter image description here](https://github.com/partx/ABB_Gm/blob/master/5.jpg?raw=true)
+![5](https://github.com/partx/ABB_Gm/blob/master/5.png?raw=true)
 
 5.Add PERS.
-![enter image description here](https://github.com/partx/ABB_Gm/blob/master/6.jpg?raw=true)
+![6](https://github.com/partx/ABB_Gm/blob/master/6.png?raw=true)
 
-6.Start monitor.
-![enter image description here](https://github.com/partx/ABB_Gm/blob/master/7.jpg?raw=true)
+![7](https://github.com/partx/ABB_Gm/blob/master/7.png?raw=true)
+
 ----------
 
 
